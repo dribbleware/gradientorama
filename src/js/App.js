@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { HuePicker } from 'react-color';
+import Slider from './components/Slider';
 import Logo from './components/Logo';
 
 export default class App extends Component {
@@ -7,42 +8,44 @@ export default class App extends Component {
     super(props, context);
 
     this.state = {
-      colorFirst: { r: '19', g: '21', b: '241', a: '1'},
-      colorSecond: { r: '241', g: '19', b: '98', a: '1'}
+      sliders: [
+        {
+          'id' : 'first',
+          'color': { r: 19, g: 21, b: 241, a: 1 }
+        },
+        {
+          'id' : 'second',
+          'color': { r: 241, g: 19, b: 98, a: 1 }
+        }
+      ]
     }
 
-    this.handleChangeFirst = this.handleChangeFirst.bind(this);
-    this.handleChangeSecond = this.handleChangeSecond.bind(this);
+    this.onColorChange = this.onColorChange.bind(this)
   }
-  handleChangeFirst(color, event) {
-    this.setState({ colorFirst: color.rgb })
-  }
-  handleChangeSecond(color, event) {
-    this.setState({ colorSecond: color.rgb })
+  onColorChange(color, id) {
+    id = id == 'first' ? 0 : 1
+
+    var state = this.state;
+    var slider = state.sliders[id];
+    slider.color = Object.assign({}, color.rgb);
+    
+    this.setState({
+      sliders: state.sliders
+    })
   }
   render() {
-    var rf = this.state.colorFirst.r,
-        gf = this.state.colorFirst.g,
-        bf = this.state.colorFirst.b,
-        rs = this.state.colorSecond.r,
-        gs = this.state.colorSecond.g,
-        bs = this.state.colorSecond.b;
+    var top = this.state.sliders[0].color,
+      bottom = this.state.sliders[1].color;
 
     const container = {
-      background: `linear-gradient(to bottom, rgba(${rf}, ${gf}, ${bf}, 1), rgba(${rs}, ${gs}, ${bs}, 1)`
+      background: `linear-gradient(to bottom, rgba(${top.r}, ${top.g}, ${top.b}, 1), rgba(${bottom.r}, ${bottom.g}, ${bottom.b}, 1)`
     }
+
     return (
-      <div className="container" style={ container }>
-        <div className="slider-wrap slider-wrap-first">
-          <div className="slider">
-            <HuePicker color={ this.state.colorFirst } onChange={ this.handleChangeFirst }  width="100%"></HuePicker>
-          </div>
-        </div>
-        <div className="slider-wrap slider-wrap-second">
-          <div className="slider">
-            <HuePicker color={ this.state.colorSecond } onChange={ this.handleChangeSecond }  width="100%" ></HuePicker>
-          </div>
-        </div>
+      <div className="container" style={container} >
+        { this.state.sliders.map((item, index) => (
+            <Slider key={item.id} slider={item} onColorChange={this.onColorChange}></Slider>
+        ))}
         <Logo></Logo>
       </div>
     );
