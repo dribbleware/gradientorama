@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { HuePicker } from 'react-color';
 import Slider from './components/Slider';
 import Logo from './components/Logo';
 
@@ -10,11 +9,11 @@ export default class App extends Component {
     this.state = {
       sliders: [
         {
-          'id' : 'first',
-          'color': { r: 19, g: 21, b: 241, a: 1 }
+          'id': 'first',
+          'color': { r: 64, g: 66, b: 231, a: 1 }
         },
         {
-          'id' : 'second',
+          'id': 'second',
           'color': { r: 241, g: 19, b: 98, a: 1 }
         }
       ]
@@ -25,12 +24,13 @@ export default class App extends Component {
   onColorChange(color, id) {
     id = id == 'first' ? 0 : 1
 
-    var state = this.state;
-    var slider = state.sliders[id];
-    slider.color = Object.assign({}, color.rgb);
-    
-    this.setState({
-      sliders: state.sliders
+    this.setState((state, props) => {
+      var slider = state.sliders[id];
+      slider.color = Object.assign({}, color.rgb);
+      
+      return {
+        sliders: state.sliders
+      }
     })
   }
   render() {
@@ -38,7 +38,7 @@ export default class App extends Component {
       bottom = this.state.sliders[1].color;
 
     const container = {
-      background: `linear-gradient(to bottom, rgba(${top.r}, ${top.g}, ${top.b}, 1), rgba(${bottom.r}, ${bottom.g}, ${bottom.b}, 1)`
+      background: `linear-gradient(to bottom, rgba(${top.r}, ${top.g}, ${top.b}, ${top.a}), rgba(${bottom.r}, ${bottom.g}, ${bottom.b}, ${bottom.a})`
     }
 
     return (

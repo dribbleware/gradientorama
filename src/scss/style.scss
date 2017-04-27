@@ -1,3 +1,5 @@
+$btn-dim: 50px;
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -18,23 +20,56 @@ body {
 }
 .slider-wrap {
     position: absolute;
-    width: 80%;
-    margin: 0 10%;
+    width: $btn-dim;
+    left: calc(50% - #{$btn-dim / 2});
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .slider {
+        position: absolute;
+    }
+    &-first {
+        top: 5vh;
+        .slider {
+            top: $btn-dim / 4;
+        }
+    }
+    &-second {
+        bottom: 5vh;
+        .slider {
+            bottom: $btn-dim / 4;
+        }
+    }
+}
+.slider-btn {
+    height: $btn-dim;
+    width: $btn-dim;
+    background-color: white;
+    border-radius: 50%;
+    margin: 0 auto;
     opacity: 0.1;
-    transition: opacity 250ms ease-in-out;
+    cursor: pointer;
+    transition: opacity 250ms linear;
+    &:hover {
+        opacity: 1;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 1);
+        transform-origin: center;
+        animation: ripple 1.5s infinite;
+    }
 }
-.slider-wrap:active, .slider-wrap:hover {
-    opacity: 1;
-}
-.slider-wrap-first {
-    top: 5vh;
-}
-.slider-wrap-second {
-    bottom: 5vh;
-}
-.slider {
-    width: 100%;
-    position: relative;
+.cover {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
 }
 .logo {
     display: flex;
@@ -47,4 +82,18 @@ body {
     color: #fff;
     font-family: 'Monoton', cursive;
     text-shadow: 2px 2px 5px #333;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(1.01);
+        border-color: rgba(255, 255, 255, 0);
+    }
+    5% {
+        border-color: rgba(255, 255, 255, 1);
+    }
+    100% {
+        transform: scale(1.5);
+        border-color: rgba(255, 255, 255, 0);
+    }
 }
