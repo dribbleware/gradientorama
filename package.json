@@ -1,6 +1,6 @@
 {
   "name": "gradientorama",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A playground for gradient lovers",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,9 @@
     "build:webpack": "cross-env NODE_ENV=production webpack -p"
   },
   "author": "vivensio",
+  "repository": {
+    "url": "https://github.com/dribbleware/gradientorama"
+  },
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.22.2",
