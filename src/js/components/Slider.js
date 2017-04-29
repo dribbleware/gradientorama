@@ -24,16 +24,19 @@ export default class Slider extends Component {
   }
   render () {
     let slider = null;
-    if (this.state.pickerDisplayed) {
-      slider = <div className="slider">
-                <div className="cover" onClick={ this.handleClosePicker }></div>
-                <ChromePicker color={this.props.slider.color} onChange={this.handleColorChange}></ChromePicker>
-              </div>
+    const isDisplayed = this.state.pickerDisplayed ? 'picker-is-visible' : '';
+    const currentColor = this.props.slider.color;
+    const btnStyle = {
+      background: `rgba(${currentColor.r}, ${currentColor.g}, ${currentColor.b}, ${currentColor.a})`
     }
+    slider = <div className={`slider ${isDisplayed}`}>
+              <ChromePicker color={currentColor} onChange={this.handleColorChange}></ChromePicker>
+            </div>
     return(
       <div className={`slider-wrap slider-wrap-${this.props.slider.id}`} >
-        <div className="slider-btn" onClick={ this.displayPicker }></div>
+        <div className={`slider-btn ${isDisplayed}`} style={ btnStyle } onClick={ this.displayPicker }></div>
         { slider }
+        <div className={`cover ${isDisplayed}`} onClick={ this.handleClosePicker }></div>
       </div>
     )
   }
