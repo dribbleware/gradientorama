@@ -82,6 +82,9 @@ body {
     color: #fff;
     font-family: 'Monoton', cursive;
     text-shadow: 2px 2px 5px #333;
+    width: 1em;
+    word-break: break-all;
+    text-transform: uppercase;
 }
 
 @keyframes ripple {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Slider from './components/Slider';
-import Logo from './components/Logo';
 
 export default class App extends Component {
   constructor(props, context) {
@@ -46,7 +45,7 @@ export default class App extends Component {
         { this.state.sliders.map((item, index) => (
             <Slider key={item.id} slider={item} onColorChange={this.onColorChange}></Slider>
         ))}
-        <Logo></Logo>
+        <div className="logo">gradientorama</div>
       </div>
     );
   }
