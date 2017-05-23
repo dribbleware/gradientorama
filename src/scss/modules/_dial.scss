@@ -1,0 +1,12 @@
+.dial {
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    canvas {
+        height: 100%;
+        width: 100%;
+    }
+}

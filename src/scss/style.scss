@@ -1,3 +1,5 @@
+@import 'modules/dial';
+
 $btn-dim: 50px;
 
 * {
@@ -43,12 +45,20 @@ body {
             top: 0;
             transform-origin: 50% 10%;
         }
+        &.to-right {
+            top: 45vh;
+            left: 10vw;
+        }
     }
     &-second {
         bottom: 5vh;
         .slider {
             bottom: 0;
             transform-origin: 50% 90%;
+        }
+        &.to-right {
+            top: 45vh;
+            right: 10vw;
         }
     }
 }
@@ -92,22 +102,29 @@ body {
     &.picker-is-visible {
         display: block;
     }
+    &.is-visible {
+        display: block;
+        z-index: 1;
+    }
 }
 .logo {
     display: flex;
     justify-content: center;
     height: 100%;
     position: absolute;
-    right: 7%;
+    right: 7vw;
     flex-direction: column;
     font-size: 5vh;
     line-height: 1;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.7);
     font-family: 'Monoton', cursive;
     text-shadow: 2px 2px 5px #333;
     width: 1px;
     word-break: break-all;
     text-transform: uppercase;
+    @media (max-width: 801px) and (orientation: portrait) {
+        right: 15vw;
+    }
 }
 
 @keyframes ripple {
