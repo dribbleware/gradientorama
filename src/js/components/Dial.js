@@ -8,6 +8,10 @@ export default class Dial extends Component {
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
 
+    this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
+
     this.drawCanvas = this.drawCanvas.bind(this);
   }
   getAngle(e) {
@@ -15,13 +19,15 @@ export default class Dial extends Component {
     
     var x = e.clientX - bounds.left,
       y = e.clientY - bounds.top,
-      a = Math.atan2(x - this.props.size / 2, this.props.size / 2 - y);
+      a = Math.atan2(x - this.size / 2, this.size / 2 - y);
 
     var val = a * 180 / Math.PI;
     return Math.round(val * 1000) / 1000;
   }
   componentDidMount() {
+    this.size = 100;
     this.drawCanvas();
+    this.canvas.addEventListener('touchstart', this.handleTouchStart);
   }
   componentDidUpdate() {
     this.drawCanvas();
@@ -39,16 +45,33 @@ export default class Dial extends Component {
     document.removeEventListener('mousemove', this.handleMouseMove);
     document.removeEventListener('mouseup', this.handleMouseUp);
   }
+  handleTouchStart(e) {
+    e.preventDefault();
+    this.touchIndex = e.targetTouches.length - 1;
+    this.props.onChange(this.getAngle(e.targetTouches[this.touchIndex]));
+    document.addEventListener('touchmove', this.handleTouchMove, false);
+    document.addEventListener('touchend', this.handleTouchEnd);
+    document.addEventListener('touchcancel', this.handleTouchEnd);
+  }
+  handleTouchMove(e) {
+    this.props.onChange(this.getAngle(e.targetTouches[this.touchIndex]));
+  }
+  handleTouchEnd(e) {
+    this.props.onChange(this.getAngle(e.changedTouches[this.touchIndex]));
+    document.removeEventListener('touchmove', this.handleTouchMove);
+    document.removeEventListener('touchend', this.handleTouchEnd);
+    document.removeEventListener('touchcancel', this.handleTouchEnd);
+  }
   drawCanvas() {
 
     var arcAngle = 2 * Math.PI, 
       startAngle = 1.5 * Math.PI,
       endAngle = 1.5 * Math.PI + arcAngle;
 
-    this.canvas.width = 200;
-    this.canvas.height = 200;
+    this.canvas.width = 100;
+    this.canvas.height = 100;
     var ctx = this.canvas.getContext('2d');
-    this.xy = this.props.size / 2;
+    this.xy = this.size / 2;
     this.lineWidth = this.xy * '0.5';
     this.radius = this.xy - this.lineWidth / 2;
     ctx.lineWidth = this.lineWidth;

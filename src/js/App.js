@@ -51,7 +51,7 @@ export default class App extends Component {
         { this.state.sliders.map((item, index) => (
             <Slider key={item.id} slider={item} onColorChange={this.onColorChange}></Slider>
         ))}
-        <Dial angle={this.state.angle} size={100} onChange={this.handleAngleChange} />
+        <Dial angle={this.state.angle} onChange={this.handleAngleChange} />
         <div className="logo">gradientorama</div>
       </div>
     );
