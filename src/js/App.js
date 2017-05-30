@@ -2,21 +2,23 @@ import React, { Component } from 'react';
 import Slider from './components/Slider';
 import Dial from './components/Dial';
 
+const sliders = [
+  {
+    'id': 'first',
+    'color': { r: 64, g: 66, b: 231, a: 1 }
+  },
+  {
+    'id': 'second',
+    'color': { r: 241, g: 19, b: 98, a: 1 }
+  }
+]
+
 export default class App extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      sliders: [
-        {
-          'id': 'first',
-          'color': { r: 64, g: 66, b: 231, a: 1 }
-        },
-        {
-          'id': 'second',
-          'color': { r: 241, g: 19, b: 98, a: 1 }
-        }
-      ],
+      sliders,
       angle: 28
     }
 
@@ -24,22 +26,18 @@ export default class App extends Component {
     this.handleAngleChange = this.handleAngleChange.bind(this)
   }
   onColorChange(color, id) {
-    id = id == 'first' ? 0 : 1
+    const assign = item => {
+      if (item.id === id) item.color = Object.assign({}, color.rgb);
+      return item;
+    }
 
-    this.setState((state, props) => {
-      var slider = state.sliders[id];
-      slider.color = Object.assign({}, color.rgb);
-      
-      return {
-        sliders: state.sliders
-      }
-    })
+    this.setState({ sliders : this.state.sliders.map(assign) })
   }
   handleAngleChange(angle) {
-    this.setState({'angle': angle});
+    this.setState({angle: angle});
   }
   render() {
-    var top = this.state.sliders[0].color,
+    const top = this.state.sliders[0].color,
       bottom = this.state.sliders[1].color;
 
     const container = {
